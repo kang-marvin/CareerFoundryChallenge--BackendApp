@@ -1,34 +1,41 @@
-# Rails API Template (rails-api-template)
+# Career Foundry Code Challenge (backend application)
 
-Rails on Rails ***version 6.0.0***,
+## **Models**
 
-Ruby ***version 2.6.3***
+  1. User table (single table inheritance)
+      - Student
+      - Mentor
 
-# Topics to consider
+  2. Appointemt table
 
-### *Background Jobs*
+### **Models :: Relationships**
+  1. Student
+     - `belongs_to` Mentor
+     - `has_many` Appointments.
 
- > Sidekiq as the Queue Adapater.
+  2. Mentor
+     - `has_many` Student.
+     - `has_many` Appointments `through` Student
 
- > Redis for caching.
+  3. Appointment
+      - `belongs_to` Student
 
-### *Database Configuration*
+### **Models :: Variables**
 
-  > Postgress database
+  1. User (Student & Mentor)
+    > name
+    > email
+    > time_zone
 
-### *Deployment*
+  2. Appointment
+    > title
+    > student_id
+    > mentor_id
+    > description
+    > status [ pending, rejected, approved ]
+    > video_link ( *nil* for right now )
+    > start_time
+    > end_time
 
-  > Deployemt script is contained in `deploy.rb` for heroku apps.
 
-### *Error Management*
-
-  > Read `ApiApplicationController` for more information.
-
-### *Serializers*
-
-  > Active model serializers.
-
-### *Testing*
-
-  > RSpec testing framework.
 
