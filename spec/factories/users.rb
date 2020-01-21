@@ -3,8 +3,8 @@ FactoryBot.define do
   # User factory
 
   factory :user do
-    first_name  { Faker::University.unique.name }
-    last_name   { Faker::University.unique.name }
+    first_name  { Faker::Name.first_name }
+    last_name   { Faker::Name.last_name }
     email       { Faker::Internet.unique.email }
     time_zone   { '-03:00' }
   end
@@ -12,8 +12,8 @@ FactoryBot.define do
   # Student factory
 
   factory :student do
-    first_name  { Faker::University.unique.name }
-    last_name   { Faker::University.unique.name }
+    first_name  { Faker::Name.first_name }
+    last_name   { Faker::Name.last_name }
     email       { Faker::Internet.unique.email }
     time_zone   { '-03:00' }
 
@@ -26,8 +26,8 @@ FactoryBot.define do
 
   # Mentor factory
   factory :mentor do
-    first_name  { Faker::University.unique.name }
-    last_name   { Faker::University.unique.name }
+    first_name  { Faker::Name.first_name }
+    last_name   { Faker::Name.last_name }
     email       { Faker::Internet.unique.email }
     time_zone   { '-03:00' }
 

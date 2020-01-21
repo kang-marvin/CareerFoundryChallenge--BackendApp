@@ -11,8 +11,8 @@ Mentor.destroy_all
 
 5.times {
   mentor_data = {
-    first_name: Faker::University.unique.name,
-    last_name: Faker::University.unique.name,
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
     email: Faker::Internet.unique.email,
     time_zone: "-02:00"
   }
@@ -26,8 +26,8 @@ Student.destroy_all
 
 5.times {
   student_data = {
-    first_name: Faker::University.unique.name,
-    last_name: Faker::University.unique.name,
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
     email: Faker::Internet.unique.email,
     time_zone: "-03:00"
   }

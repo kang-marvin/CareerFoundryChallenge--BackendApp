@@ -3,7 +3,7 @@ class Appointment < ApplicationRecord
   # Notes:
     #! Only mentor can approve or reject appointment.
 
-  STATUS = [ 'pending', 'approve', 'rejected' ].freeze
+  STATUS = [ 'pending', 'approved', 'rejected' ].freeze
 
   MINIMUM_SLOT_TIME = (30.minutes)
 
