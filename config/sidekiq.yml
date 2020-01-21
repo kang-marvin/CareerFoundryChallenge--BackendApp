@@ -1,0 +1,17 @@
+:logfile:
+  log/sidekiq.log
+
+development:
+  :concurrency: 5
+
+production:
+  :concurrency: 5
+
+test:
+  :concurrency: 3
+
+:queues:
+  - default
+  - mailers
+  - notification
+  - reports

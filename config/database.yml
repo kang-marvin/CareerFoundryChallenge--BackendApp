@@ -1,0 +1,31 @@
+#!!
+# Place the environment variables for database names in the `.env` file.
+# Also, remember to update the `username` and `password` for production database.
+#!!
+
+default: &default
+  adapter:  postgresql
+  encoding: unicode
+
+  username: postgres
+  database: postgres
+
+  host:     127.0.0.1
+  port:     5432
+
+  pool:     <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout:  5000
+
+development:
+  <<: *default
+  database: relishmba_development
+  database: <%= ENV.fetch("DEVELOPMENT_DATABASE") { 'rails_api_dev_database' } %>
+
+test:
+  <<: *default
+  database: relishmba_test
+  database: <%= ENV.fetch("TESTING_DATABASE") { 'rails_api_test_database' } %>
+
+# production:
+#   <<: *default
+#   database: <%= ENV.fetch("PRODUCTION_DATABASE") { 'rails_api_prod_database' } %>
