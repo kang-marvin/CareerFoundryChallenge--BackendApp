@@ -18,7 +18,6 @@ module Api
       render json: {}, status: 422 if Rails.env.production?
       render json: {
         message: exception,
-        backtrace: exception.backtrace.sub("\n\t", ": #{e}#{e.class ? " (#{e.class})" : ''}\n\t")
       }, status: 422
       Rails.logger.info("#{exception.class}: " + exception.message)
     end
