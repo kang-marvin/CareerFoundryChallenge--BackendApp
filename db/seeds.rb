@@ -49,7 +49,12 @@ Appointment.destroy_all
     end_time:    current_time + Appointment::MINIMUM_SLOT_TIME,
   }
 
-  Appointment.create(appointment_data)
+  invloved_partners = {
+    student_id: Student.all.sample.id,
+    mentor_id: Mentor.all.sample.id,
+  }
+
+  Appointment.create(appointment_data.merge!(invloved_partners))
 }
 
 puts "Appointments created successfully\n\n"
