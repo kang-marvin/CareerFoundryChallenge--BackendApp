@@ -13,4 +13,6 @@ class Appointment < ApplicationRecord
   validates :status,
             inclusion: { in: STATUS }
 
+  belongs_to :mentor
+  belongs_to :student
 end
