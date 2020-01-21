@@ -1,13 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe Appointment, type: :model do
-  subject { build(:appointment) }
+
+  before(:all) do
+    Student.destroy_all
+    Mentor.destroy_all
+
+    create_list(:student, 5)
+    create_list(:mentor, 5)
+  end
+
+  subject {
+    build(
+      :appointment,
+      student: Student.all.sample,
+      mentor: Mentor.all.sample,
+      )
+    }
 
   describe 'Presence validations' do
     specify { should validate_presence_of(:title) }
   end
 
   describe 'Associations' do
+    it { should belong_to(:mentor) }
+    it { should belong_to(:student) }
   end
 
   it 'is valid with valid attributes' do
