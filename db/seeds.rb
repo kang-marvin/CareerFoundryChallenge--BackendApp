@@ -6,6 +6,37 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+
+Mentor.destroy_all
+
+5.times {
+  mentor_data = {
+    first_name: Faker::University.unique.name,
+    last_name: Faker::University.unique.name,
+    email: Faker::Internet.unique.email,
+    time_zone: "-02:00"
+  }
+
+  Mentor.create(mentor_data)
+}
+
+puts "Mentors created successfully\n\n"
+
+Student.destroy_all
+
+5.times {
+  student_data = {
+    first_name: Faker::University.unique.name,
+    last_name: Faker::University.unique.name,
+    email: Faker::Internet.unique.email,
+    time_zone: "-03:00"
+  }
+
+  Student.create(student_data)
+}
+
+puts "Students created successfully\n\n"
+
 puts 'Seeding completed...'
 
 
