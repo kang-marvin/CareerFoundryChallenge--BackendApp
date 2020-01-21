@@ -24,19 +24,29 @@
 ### **Models :: Variables**
 
   1. User (Student & Mentor)
-    > name
-    > email
-    > time_zone
+      > name
+
+      > email
+
+      > time_zone
 
   2. Appointment
-    > title
-    > student_id
-    > mentor_id
-    > description
-    > status [ pending, rejected, approved ]
-    > video_link ( *nil* for right now )
-    > start_time
-    > end_time
+      > title
+
+      > student_id
+
+      > mentor_id
+
+      > description
+
+      > status [ pending, rejected, approved ]
+
+      > video_link ( *nil* for right now )
+
+      > start_time
+
+      > end_time
+
 
 
 
