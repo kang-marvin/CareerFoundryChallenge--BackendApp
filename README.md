@@ -10,15 +10,16 @@
 
 ### **Models :: Relationships**
   1. Student
-     - `belongs_to` Mentor
-     - `has_many` Appointments.
+     - `has_many` Appointments
+     - `has_many` Mentors `through` Appointments
 
   2. Mentor
-     - `has_many` Student.
-     - `has_many` Appointments `through` Student
+     - `has_many ` Appointments
+     - `has_many` Students `through` Appointments
 
   3. Appointment
       - `belongs_to` Student
+      - `belongs_to` Mentor
 
 ### **Models :: Variables**
 
