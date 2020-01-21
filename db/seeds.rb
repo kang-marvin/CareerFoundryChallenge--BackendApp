@@ -37,6 +37,23 @@ Student.destroy_all
 
 puts "Students created successfully\n\n"
 
+Appointment.destroy_all
+
+5.times {
+  current_time = DateTime.now
+  appointment_data = {
+    title:       'Mentoring Session',
+    description: '',
+    video_link:  '',
+    start_time:  current_time,
+    end_time:    current_time + Appointment::MINIMUM_SLOT_TIME,
+  }
+
+  Appointment.create(appointment_data)
+}
+
+puts "Appointments created successfully\n\n"
+
 puts 'Seeding completed...'
 
 
