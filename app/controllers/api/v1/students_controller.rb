@@ -16,6 +16,21 @@ module Api
         }, status: :ok
       end
 
+      def show
+        student_id = student_params['id']
+        student = Student.find(student_id)
+        render json: student
+      end
+
+      private
+
+      def student_params
+        params
+          .permit(
+            :id
+          )
+      end
+
     end
   end
 end

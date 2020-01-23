@@ -32,7 +32,7 @@ RSpec.describe 'Student Requests', type: :request do
   end
 
   context 'When a single student is requested' do
-    let!(:student) { create(:student, email: 'student@careerfoundry') }
+    let!(:student) { create(:student, email: 'student@careerfoundry.com') }
     before {
       get '/api/v1/users/students/show',
           headers: invalid_headers(),
