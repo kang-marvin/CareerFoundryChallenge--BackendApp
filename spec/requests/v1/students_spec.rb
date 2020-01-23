@@ -31,4 +31,29 @@ RSpec.describe 'Student Requests', type: :request do
     end
   end
 
+  context 'When a single student is requested' do
+    let!(:student) { create(:student, email: 'student@careerfoundry') }
+    before {
+      get '/api/v1/users/students/show',
+          headers: invalid_headers(),
+          params: { id: student.id }
+    }
+
+    it 'returns the requested student' do
+      expect(json_response[:student][:id]).to eql(student.id)
+    end
+  end
+
+  context 'When non-existing student is requested' do
+    before {
+      get '/api/v1/users/students/show',
+          headers: invalid_headers(),
+          params: { id: 0 }
+    }
+
+    it 'returns list of errors' do
+      expect(json_response[:errors]).to_not be_empty
+    end
+  end
+
 end

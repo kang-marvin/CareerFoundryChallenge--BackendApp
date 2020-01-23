@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         # Student based paths
         scope :students do
           get '/index', to: "students#index"
+          get '/show',  to: "students#show"
         end
 
       end
