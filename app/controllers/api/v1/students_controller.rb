@@ -17,17 +17,43 @@ module Api
       end
 
       def show
-        student_id = student_params['id']
+        student_id = student_params['student_id']
         student = Student.find(student_id)
         render json: student
+      end
+
+      def create_appointment
+        student = Student.find(student_params['student_id'])
+        mentor  = Mentor.find(mentor_params['mentor_id'])
+
+        appointment = student.appointments.new(
+                        appointment_params.merge(mentor: mentor)
+                      )
+
+        render json: {
+          errors: appointment.errors.full_messages
+        }, status: :unproceable_entity unless appointment.save!
+
+        render json: appointment
       end
 
       private
 
       def student_params
+        params.permit(:student_id)
+      end
+
+      def mentor_params
+        params.permit(:mentor_id)
+      end
+
+      def appointment_params
         params
           .permit(
-            :id
+            :title,
+            :description,
+            :start_time,
+            :end_time
           )
       end
 

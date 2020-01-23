@@ -10,6 +10,9 @@ Rails.application.routes.draw do
         scope :students do
           get '/index', to: "students#index"
           get '/show',  to: "students#show"
+
+          post '/create_appointment',
+               to: "students#create_appointment"
         end
 
       end

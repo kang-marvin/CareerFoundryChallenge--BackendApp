@@ -82,6 +82,7 @@ RSpec.describe 'Student Requests', type: :request do
 
     it 'returns the created appointment object' do
       expect(json_response[:appointment][:status]).to eql('pending')
+      expect(json_response[:appointment][:title]).to eql('My appointment slot')
     end
   end
 
