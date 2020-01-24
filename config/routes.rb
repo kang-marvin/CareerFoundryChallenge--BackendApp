@@ -21,11 +21,15 @@ Rails.application.routes.draw do
                 to: "students#delete_appointment"
         end
 
-      end
+        # Mentor based paths
+        scope :mentors do
+          get '/index', to: "mentors#index"
+          get '/show',  to: "mentors#show"
 
-      get '/mentors/index',   to: "mentors#index"
-      get '/mentors/show',    to: "mentors#show"
-      post '/mentors/update', to: "mentors#update"
+          post '/update_appointment',
+               to: "mentors#update_appointment"
+        end
+      end
 
     end
   end
