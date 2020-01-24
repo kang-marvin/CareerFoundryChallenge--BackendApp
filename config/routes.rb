@@ -13,6 +13,9 @@ Rails.application.routes.draw do
 
           post '/create_appointment',
                to: "students#create_appointment"
+
+          delete '/delete_appointment',
+                to: "students#delete_appointment"
         end
 
       end

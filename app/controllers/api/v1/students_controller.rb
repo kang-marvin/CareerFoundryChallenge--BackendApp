@@ -37,6 +37,25 @@ module Api
         render json: appointment
       end
 
+      def delete_appointment
+        student = Student.find(student_params['student_id'])
+        appointment_id = params['appointment_id']
+
+        appointment = student
+                        .appointments
+                        .where(id: appointment_id)
+                        .first
+
+        raise ActiveRecord::RecordNotFound and return if appointment.nil?
+
+        appointment.delete
+
+        render json: {
+          student: StudentSerializer.new(student),
+          message: "Appointment deleted successfully"
+        }, status: :ok
+      end
+
       private
 
       def student_params
