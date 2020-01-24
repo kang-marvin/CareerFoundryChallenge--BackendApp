@@ -136,4 +136,33 @@ RSpec.describe 'Student Requests', type: :request do
     end
   end
 
+  context 'When student updates details of appointment' do
+    let!(:mentor)   { create(:mentor, email: 'mentor@careerfoundry.com' ) }
+    let!(:student)  { create(:student, email: 'student@careerfoundry.com' ) }
+
+    let!(:appointments) {
+      create_list(:appointment, 5, mentor: mentor, student: student)
+    }
+
+    time_in_30_minutes = DateTime.now + 30.minutes
+
+    before {
+      post '/api/v1/users/students/update_appointment',
+            headers: invalid_headers(),
+            params: {
+                      appointment_id: appointments.pluck(:id).first,
+                      student_id: student.id,
+                      title: 'New Appointment Title',
+                      end_time: time_in_30_minutes,
+                      description: 'New Appointment Description',
+                    }.to_json
+    }
+
+    it 'returns the updated appointment object' do
+      expect(json_response[:appointment][:status]).to eql('pending')
+      expect(json_response[:appointment][:title]).to eql('New Appointment Title')
+      expect(json_response[:appointment][:description]).to eql('New Appointment Description')
+    end
+  end
+
 end
