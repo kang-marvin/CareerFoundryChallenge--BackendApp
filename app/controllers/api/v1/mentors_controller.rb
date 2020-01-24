@@ -17,18 +17,17 @@ module Api
       end
 
       def show
-        mentor = Mentor.find(mentors_params["id"])
+        mentor = Mentor.find(mentors_params["mentor_id"])
         render json: mentor
       end
 
-      def update
-        # Update an appointment's status (THIS SHOULD BE MOVED TO APPOINTMENT CONTROLLER)
-        mentor = Mentor.find(mentors_params["id"])
+      def update_appointment
+        mentor = Mentor.find(mentors_params["mentor_id"])
         appointment = mentor.appointments.find(mentors_params["appointment_id"])
 
-        render json: {
-          errors: appointment.errors.full_messages
-        }, status: :unproceable_entity unless appointment.update!(status: mentors_params["status"])
+        raise ActiveRecord::RecordNotFound and return if appointment.nil?
+
+        appointment.update(status: mentors_params["status"])
 
         render json: appointment
       end
@@ -38,10 +37,10 @@ module Api
       def mentors_params
         params
           .permit(
-            :id,
-            :name,
+            :mentor_id,
             :student_id,
             :appointment_id,
+            :name,
             :status
           )
       end
