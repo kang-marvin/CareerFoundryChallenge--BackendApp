@@ -56,6 +56,23 @@ module Api
         }, status: :ok
       end
 
+      def update_appointment
+        student = Student.find(student_params['student_id'])
+
+        appointment = student
+                        .appointments
+                        .where(id: params['appointment_id'])
+                        .first
+
+        raise ActiveRecord::RecordNotFound and return if appointment.nil?
+
+        render json: {
+          errors: appointment.errors.full_messages
+        }, status: :unproceable_entity unless appointment.update!(appointment_params)
+
+        render json: appointment
+      end
+
       private
 
       def student_params
