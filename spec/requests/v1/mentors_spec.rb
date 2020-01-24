@@ -7,7 +7,7 @@ RSpec.describe 'Mentor Requests', type: :request do
   context 'When Empty Mentors' do
     before { Mentor.destroy_all }
     before {
-      get '/api/v1/mentors/index',
+      get '/api/v1/users/mentors/index',
           headers: invalid_headers()
     }
 
@@ -19,7 +19,7 @@ RSpec.describe 'Mentor Requests', type: :request do
   context 'When Populated with mentors' do
     before { create_list(:mentor, 5) }
     before {
-      get '/api/v1/mentors/index',
+      get '/api/v1/users/mentors/index',
           headers: invalid_headers()
     }
 
@@ -29,11 +29,11 @@ RSpec.describe 'Mentor Requests', type: :request do
   end
 
   context 'When A single mentor is requested' do
-    let!(:mentor) { create(:mentor, email: 'user@careerfoundry.com') }
+    let!(:mentor) { create(:mentor, email: 'mentor@careerfoundry.com') }
     before {
-      get '/api/v1/mentors/show',
+      get '/api/v1/users/mentors/show',
           headers: invalid_headers(),
-          params: { id: mentor.id }
+          params: { mentor_id: mentor.id }
     }
 
     it 'returns the requested mentor' do
@@ -43,9 +43,9 @@ RSpec.describe 'Mentor Requests', type: :request do
 
   context 'When Non-Exisiting mentor is requested' do
     before {
-      get '/api/v1/mentors/show',
+      get '/api/v1/users/mentors/show',
           headers: invalid_headers(),
-          params: { id: 0 }
+          params: { mentor_id: 0 }
     }
 
     it 'returns list of errors' do
@@ -60,10 +60,10 @@ RSpec.describe 'Mentor Requests', type: :request do
     let!(:appointment) { create(:appointment, mentor: mentor, student: student)}
 
     before {
-      post '/api/v1/mentors/update',
+      post '/api/v1/users/mentors/update_appointment',
             headers: invalid_headers(),
             params: {
-              id: mentor.id,
+              mentor_id: mentor.id,
               appointment_id: appointment.id,
               status: 'rejected'
             }.to_json
@@ -82,10 +82,10 @@ RSpec.describe 'Mentor Requests', type: :request do
     let!(:appointment) { create(:appointment, mentor: mentor, student: student)}
 
     before {
-      post '/api/v1/mentors/update',
+      post '/api/v1/users/mentors/update_appointment',
             headers: invalid_headers(),
             params: {
-              id: 0,
+              mentor_id: 0,
               appointment_id: appointment.id,
               status: 'rejecte'
             }.to_json

@@ -41,10 +41,7 @@ module Api
         student = Student.find(student_params['student_id'])
         appointment_id = params['appointment_id']
 
-        appointment = student
-                        .appointments
-                        .where(id: appointment_id)
-                        .first
+        appointment = student.appointments.find(appointment_id)
 
         raise ActiveRecord::RecordNotFound and return if appointment.nil?
 
@@ -59,16 +56,11 @@ module Api
       def update_appointment
         student = Student.find(student_params['student_id'])
 
-        appointment = student
-                        .appointments
-                        .where(id: params['appointment_id'])
-                        .first
+        appointment = student.appointments.find(params['appointment_id'])
 
         raise ActiveRecord::RecordNotFound and return if appointment.nil?
 
-        render json: {
-          errors: appointment.errors.full_messages
-        }, status: :unproceable_entity unless appointment.update!(appointment_params)
+        appointment.update(appointment_params)
 
         render json: appointment
       end
