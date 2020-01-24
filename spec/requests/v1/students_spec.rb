@@ -165,4 +165,57 @@ RSpec.describe 'Student Requests', type: :request do
     end
   end
 
+  context 'When student updates details of appointment he/she didn\'t create'  do
+    let!(:mentor)   { create(:mentor, email: 'mentor@careerfoundry.com' ) }
+    let!(:student_one)  { create(:student, email: 'student1@careerfoundry.com' ) }
+    let!(:student_two)  { create(:student, email: 'student2@careerfoundry.com' ) }
+
+    let!(:std_1_appointments) {
+      create_list(:appointment, 5, mentor: mentor, student: student_one)
+    }
+    let!(:std_2_appointments) {
+      create_list(:appointment, 2, mentor: mentor, student: student_two)
+    }
+
+    time_in_30_minutes = DateTime.now + 30.minutes
+
+    before {
+      post '/api/v1/users/students/update_appointment',
+            headers: invalid_headers(),
+            params: {
+                      appointment_id: std_1_appointments.pluck(:id).first,
+                      student_id: student_two.id,
+                      title: 'New Appointment Title',
+                      end_time: time_in_30_minutes,
+                      description: 'New Appointment Description',
+                    }.to_json
+    }
+
+    it 'returns list of errors' do
+      expect(json_response[:errors]).to_not be_empty
+    end
+  end
+
+  context 'When student updates details of non-exisitng appointment' do
+    let!(:student)  { create(:student, email: 'student@careerfoundry.com' ) }
+
+    time_in_30_minutes = DateTime.now + 30.minutes
+
+    before {
+      post '/api/v1/users/students/update_appointment',
+            headers: invalid_headers(),
+            params: {
+                      appointment_id: 0,
+                      student_id: student.id,
+                      title: 'New Appointment Title',
+                      end_time: time_in_30_minutes,
+                      description: 'New Appointment Description',
+                    }.to_json
+    }
+
+    it 'returns list of errors' do
+      expect(json_response[:errors]).to_not be_empty
+    end
+  end
+
 end
