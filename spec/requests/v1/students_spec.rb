@@ -86,4 +86,54 @@ RSpec.describe 'Student Requests', type: :request do
     end
   end
 
+  context 'When student deletes an appointment' do
+    let!(:mentor)   { create(:mentor, email: 'mentor@careerfoundry.com' ) }
+    let!(:student)  { create(:student, email: 'student@careerfoundry.com' ) }
+
+    let!(:appointments) {
+      create_list(:appointment, 5, mentor: mentor, student: student)
+    }
+
+    params = {}
+
+    before {
+      delete '/api/v1/users/students/delete_appointment',
+            headers: invalid_headers(),
+            params: params
+                      .merge({
+                        appointment_id: appointments.pluck(:id).sample,
+                        student_id: student.id
+                      })
+                      .to_json
+    }
+
+    it 'returns success message' do
+      expect(json_response[:message]).to eql('Appointment deleted successfully')
+    end
+
+    it 'returns student remaining appointments' do
+      expect(json_response[:student][:calendar][:appointments].count).to eql(4)
+    end
+
+    it 'returns student object' do
+      expect(json_response[:student][:id]).to eql(student.id)
+    end
+  end
+
+  context 'When student deletes non-exisiting appointment' do
+    let!(:student)  { create(:student, email: 'student@careerfoundry.com' ) }
+    before {
+      delete '/api/v1/users/students/delete_appointment',
+            headers: invalid_headers(),
+            params: {
+                      appointment_id: 0,
+                      student_id: student.id
+                    }.to_json
+    }
+
+    it 'returns list of errors' do
+      expect(json_response[:errors]).to_not be_empty
+    end
+  end
+
 end
